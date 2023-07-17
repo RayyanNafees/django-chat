@@ -1,0 +1,35 @@
+<!-- chat.html -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Django Chat</title>
+  </head>
+  <body>
+    <h1>Django Channels Chat</h1>
+    <div id="chat-log"></div>
+    <input id="chat-message-input" type="text" />
+    <button id="chat-message-submit" type="button">Send</button>
+  </body>
+  <script>
+    const Q = (q) => document.querySelector(q);
+
+    const chatlog = Q("#chat-log"),
+      submit = Q("#chat-message-submit"),
+      input = Q("#chat-message-input");
+
+    const chatSocket = new WebSocket(
+      "ws://" + window.location.host + "/ws/chat/"
+    );
+
+    chatSocket.onmessage = (e) => {
+      const message = JSON.parse(e.data);
+      chatlog.innerHTML += `<p>${message}</p>`;
+    };
+
+    submit.onclick = (e) => {
+      chatSocket.send(JSON.stringify(input.value));
+      input.value = "";
+    };
+  </script>
+</html>

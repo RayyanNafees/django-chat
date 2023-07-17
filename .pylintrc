@@ -1,0 +1,2 @@
+[Master]
+init-hook='sys.path = list(); sys.path.append("~/.local/share/virtualenvs/django-chat-irVLz1oY/bin/python")'
